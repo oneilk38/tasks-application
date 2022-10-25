@@ -6,6 +6,7 @@ import org.jooq.DSLContext
 import org.springframework.stereotype.Repository
 import org.jooq.generated.tables.UserTasks.USER_TASKS
 import org.jooq.generated.tables.records.UserTasksRecord
+import java.time.LocalDateTime
 
 @Repository
 class PostgresTasksRespository(
@@ -36,6 +37,43 @@ class PostgresTasksRespository(
 
         return record.toTask()
     }
+
+    override fun findAllTasksForEmployee(employeeId: Int, taskStatus: String?): Collection<Task> {
+        var query = dslContext.selectFrom(USER_TASKS).where(USER_TASKS.EMPLOYEE_ID.eq(employeeId))
+
+        if(!taskStatus.isNullOrEmpty()){
+            query = query.and(USER_TASKS.TASK_STATUS.eq(taskStatus))
+        }
+
+        val records = query.fetch()
+
+        return records.map { it.toTask() }
+    }
+
+    override fun deleteTask(taskId: Int, deletedAt: LocalDateTime) {
+        dslContext.update(USER_TASKS)
+            .set(USER_TASKS.TASK_STATUS, "DELETED")
+            .set(USER_TASKS.TASK_DELETED_AT, deletedAt)
+            .where(USER_TASKS.TASK_ID.eq(taskId))
+            .execute()
+    }
+
+    override fun completeTask(taskId: Int, completedAt: LocalDateTime) {
+        dslContext.update(USER_TASKS)
+            .set(USER_TASKS.TASK_STATUS, "COMPLETED")
+            .set(USER_TASKS.TASK_DELETED_AT, completedAt)
+            .where(USER_TASKS.TASK_ID.eq(taskId))
+            .execute()
+    }
+
+    override fun updateTaskText(taskId: Int, taskText: String) {
+        dslContext.update(USER_TASKS)
+            .set(USER_TASKS.TASK_TEXT, taskText)
+            .where(USER_TASKS.TASK_ID.eq(taskId))
+            .execute()
+    }
+
+
 
     private fun UserTasksRecord.toTask(): Task = Task(
         id = this.taskId,

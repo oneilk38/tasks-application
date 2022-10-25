@@ -1,25 +1,26 @@
 package com.project.tasks.domain.tasks;
 
 import com.project.tasks.api.commands.CreateTaskCommand
+import java.time.LocalDateTime
 
 data class Task(
-    private var id: Int,
-    val employeeId: Int,
-    val text: String
+    var id: Int,
+    var employeeId: Int,
+    var taskText: String,
+    var status: String,
+    var createdAt: LocalDateTime,
+    var deletedAt: LocalDateTime? = null,
+    var completedAt: LocalDateTime? = null
 ){
     companion object {
         fun fromCommand(command: CreateTaskCommand): Task {
             return Task(
                 id=Math.random().toInt(),
                 employeeId = command.employeeId,
-                text=command.text
+                taskText=command.text,
+                status = "CREATED",
+                createdAt = LocalDateTime.now()
             )
         }
-    }
-
-    fun getId() = id
-
-    fun setId(newId: Int) {
-        id = newId
     }
 }

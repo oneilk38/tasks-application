@@ -8,5 +8,5 @@ class TasksApplication
 
 fun main(args: Array<String>) {
 	runApplication<TasksApplication>(*args)
-	println("Running application...")
+	println("Running application - OKAY .....")
 }

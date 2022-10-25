@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	id("org.springframework.boot") version "3.0.0-SNAPSHOT"
 	id("io.spring.dependency-management") version "1.1.0"
+	id("com.revolut.jooq-docker") version "0.3.7"
 	kotlin("jvm") version "1.7.20"
 	kotlin("plugin.spring") version "1.7.20"
 }
@@ -18,12 +19,21 @@ repositories {
 }
 
 dependencies {
+	implementation("org.springframework.boot:spring-boot-starter")
 	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+	implementation("org.springframework.boot:spring-boot-starter-actuator")
+	implementation("org.springframework.boot:spring-boot-starter-jooq")
+	implementation("org.postgresql:postgresql")
+	implementation("org.jooq:jooq")
+	implementation("org.flywaydb:flyway-core")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-	developmentOnly("org.springframework.boot:spring-boot-devtools")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+	implementation("org.springdoc:springdoc-openapi-data-rest:1.6.0")
+	implementation("org.springdoc:springdoc-openapi-ui:1.6.0")
+	implementation("org.springdoc:springdoc-openapi-kotlin:1.6.0")
+
+	jdbc("org.postgresql:postgresql:42.4.0")
 }
 
 tasks.withType<KotlinCompile> {
@@ -36,6 +46,11 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
+sourceSets.main {
+	java.srcDirs("src/main/kotlin", "build/generated-jooq")
+}
+
 
 //tasks.withType<Jar>(){
 //	duplicatesStrategy = DuplicatesStrategy.EXCLUDE

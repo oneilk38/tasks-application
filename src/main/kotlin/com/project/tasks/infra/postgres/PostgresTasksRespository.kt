@@ -61,7 +61,7 @@ class PostgresTasksRespository(
     override fun completeTask(taskId: Int, completedAt: LocalDateTime) {
         dslContext.update(USER_TASKS)
             .set(USER_TASKS.TASK_STATUS, "COMPLETED")
-            .set(USER_TASKS.TASK_DELETED_AT, completedAt)
+            .set(USER_TASKS.TASK_COMPLETED_AT, completedAt)
             .where(USER_TASKS.TASK_ID.eq(taskId))
             .execute()
     }
@@ -72,8 +72,6 @@ class PostgresTasksRespository(
             .where(USER_TASKS.TASK_ID.eq(taskId))
             .execute()
     }
-
-
 
     private fun UserTasksRecord.toTask(): Task = Task(
         id = this.taskId,

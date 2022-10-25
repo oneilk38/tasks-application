@@ -17,7 +17,7 @@ data class Task(
             return Task(
                 id=Math.random().toInt(),
                 employeeId = command.employeeId,
-                taskText=command.text,
+                taskText=command.taskText,
                 status = "CREATED",
                 createdAt = LocalDateTime.now()
             )

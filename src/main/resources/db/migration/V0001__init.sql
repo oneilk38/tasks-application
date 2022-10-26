@@ -17,5 +17,3 @@ create table employees
     employee_created_at timestamp,
     employee_deleted_at timestamp
 );
-
-INSERT INTO employees (employee_id, employee_name, is_admin) VALUES (1, 'Kevin ONeill', true);

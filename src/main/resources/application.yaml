@@ -8,7 +8,7 @@ spring:
     banner-mode: OFF
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: "jdbc:postgresql://db:5432/tasks"
+    url: "jdbc:postgresql://${DB_HOST:localhost}:5432/tasks"
     username: postgres
     password: postgres
     hikari:
@@ -37,5 +37,3 @@ management:
 
 logging:
   config: classpath:logback-spring.xml
-  level:
-    root: debug

@@ -28,6 +28,7 @@ dependencies {
 	implementation("org.flywaydb:flyway-core")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+	implementation("redis.clients:jedis:3.4.0")
 
 	implementation("org.springdoc:springdoc-openapi-data-rest:1.6.0")
 	implementation("org.springdoc:springdoc-openapi-ui:1.6.0")
@@ -51,16 +52,6 @@ sourceSets.main {
 	java.srcDirs("src/main/kotlin", "build/generated-jooq")
 }
 
-
-//tasks.withType<Jar>(){
-//	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-//	manifest {
-//		attributes["Main-Class"] = "com.project.tasks.TasksApplicationKt"
-//	}
-//	configurations["compileClasspath"].forEach { file: File ->
-//		from(zipTree(file.absoluteFile))
-//	}
-//}
 
 tasks.jar {
 	manifest.attributes["Main-Class"] = "com.project.tasks.TasksApplicationKt"

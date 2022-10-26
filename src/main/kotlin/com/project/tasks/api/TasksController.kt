@@ -19,7 +19,7 @@ class TasksController (
 ) {
 
     @GetMapping("/employee/{employeeId}")
-    fun getTasks(@PathVariable employeeId: Int) = taskUseCase.getTask(employeeId)
+    fun getTasks(@PathVariable employeeId: Int) = taskUseCase.getTasks(employeeId)
 
     @GetMapping("/{taskId}")
     fun getTask(@PathVariable taskId: Int) = taskUseCase.getTask(taskId)

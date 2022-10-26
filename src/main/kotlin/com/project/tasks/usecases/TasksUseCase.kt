@@ -21,7 +21,7 @@ class TasksUseCase (
 
     fun deleteTask(taskId: Int) = taskRepository.deleteTask(taskId, LocalDateTime.now())
 
-    fun getTask(employeeId: Int, status: String? = null) = taskRepository.findAllTasksForEmployee(employeeId, status)
+    fun getTasks(employeeId: Int, status: String? = null) = taskRepository.findAllTasksForEmployee(employeeId, status)
 
     fun getTask(taskId: Int) = taskRepository.findTask(taskId)
 
